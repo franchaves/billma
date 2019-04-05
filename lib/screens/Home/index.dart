@@ -1,4 +1,5 @@
 import 'package:billma/components/Pages/GenericPage.dart';
+import 'package:billma/screens/Bills/BillsCalendarView.dart';
 import 'package:billma/screens/Bills/BillsPage.dart';
 import "package:flutter/material.dart";
 
@@ -24,7 +25,7 @@ class HomeScreenState extends State<HomeScreen>{
 
   @override
   Widget build(BuildContext context) {
-    Scaffold scaffold = new Scaffold(
+   var scaffold = Scaffold(
       appBar: _children[_selectedIndex].getAppBar(),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -38,6 +39,7 @@ class HomeScreenState extends State<HomeScreen>{
         currentIndex: _selectedIndex,
         fixedColor: Colors.deepPurple,
         onTap: _onItemTapped,
+
       ),
     );
 

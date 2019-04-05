@@ -2,6 +2,7 @@ import 'package:billma/models/Bill.dart';
 import 'package:billma/models/bills_testdata.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 
 class BillListTile extends StatelessWidget {
@@ -17,7 +18,7 @@ class BillListTile extends StatelessWidget {
   };
 
   Bill bill;
-  ListTile listTile;
+  Slidable listItem;
 
   BillListTile(Bill bill) {
     this.bill = bill;
@@ -26,10 +27,11 @@ class BillListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(bill==null)
-      return listTile;
+      return listItem;
 
     //Let's create the ListTile layout
-    listTile = ListTile(
+    ListTile listTile;
+    listTile = new ListTile(
       leading: _getBillerIcon(bill.billerName),
       title: Text(bill.billerName,style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Column (
@@ -46,7 +48,27 @@ class BillListTile extends StatelessWidget {
       )
     );
 
-    return listTile;
+    listItem = new Slidable(
+      delegate: new SlidableDrawerDelegate(),
+      actionExtentRatio: 0.25,
+      child: listTile,
+      actions: <Widget>[
+        new IconSlideAction(
+          caption: 'Pay Now',
+          color: Colors.green,
+          icon: Icons.payment,
+          onTap: () => _payNow(),
+        ),
+        new IconSlideAction(
+          caption: 'No Pay',
+          color: Colors.red,
+          icon: Icons.cancel,
+          onTap: () => _noPay(),
+        ),
+      ],
+    );
+
+    return listItem;
   }
 
   Image _getBillerIcon(String billerName) {
@@ -68,5 +90,9 @@ class BillListTile extends StatelessWidget {
   String formatDate(DateTime dateValue) {
     return DateFormat.yMMMMd("en_US").format(dateValue);
   }
+
+  _payNow() {}
+
+  _noPay() {}
 
 }
